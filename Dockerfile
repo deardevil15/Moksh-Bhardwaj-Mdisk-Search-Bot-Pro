@@ -1,20 +1,20 @@
 FROM python:3.12-slim
 
-# Install system packages
+# Install system packages and build tools
 RUN apt update && apt upgrade -y && \
-    apt install -y git curl ffmpeg
+    apt install -y git curl ffmpeg gcc g++ build-essential python3-dev libffi-dev libssl-dev
 
 # Upgrade pip
 RUN pip3 install --upgrade pip
 
-# Clone your repo
-RUN git clone https://github.com/deardevil15/Moksh-Bhardwaj-Mdisk-Search-Bot-Pro /MdiskWalaBot
+# Set work directory
+WORKDIR /app
 
-# Set working directory
-WORKDIR /MdiskWalaBot
+# Copy source code
+COPY . .
 
-# Install Python dependencies
+# Install dependencies
 RUN pip3 install -r requirements.txt
 
-# Start the bot
+# Run the bot
 CMD ["python3", "main.py"]
